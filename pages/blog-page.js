@@ -36,6 +36,6 @@ export async function getStaticProps() {
   const filteredPosts = await getAllPostsData();
   return {
     props: { filteredPosts },
-    revalidate: 3,
+    revalidate: 3,//ISRで初めてアクセスしてから3秒後にページが更新される
   };
 }
