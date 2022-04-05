@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 
-export const Post = ({ post }) => {
+export default function Post({ post }) {
+  console.log(post);
   const router = useRouter();
-  if (!post) {
-    return;
-    <div>Loading...</div>;
+  if (router.isFallback || !post) {
+    return <div>Loading...</div>;
   }
   return (
     <Layout title={post.title}>
@@ -39,7 +39,7 @@ export const Post = ({ post }) => {
       </Link>
     </Layout>
   );
-};
+}
 
 export async function getStaticPaths() {
   const paths = await getAllPostIds();
@@ -56,6 +56,6 @@ export async function getStaticProps({ params }) {
     props: {
       post,
     },
-    revalidate: 3,
+    revalidate: 3, //ISRで初めてアクセスしてから3秒後にページが更新される
   };
 }
